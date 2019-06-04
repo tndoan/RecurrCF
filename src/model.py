@@ -59,7 +59,7 @@ class RCF(nn.Module):
 
         # sequential data
         i_e_s = i_e.squeeze()
-        uu = u_idx.squeeze().numpy()
+        uu = u_idx.squeeze().cpu().numpy()
         start = uu[0]
         indexes = []
         for i in range(1, len(uu)):
