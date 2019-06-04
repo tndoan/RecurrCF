@@ -16,8 +16,8 @@ class RCF(nn.Module):
 
         self.u_emb = nn.Embedding(self.num_users, self.emb_size)
         self.i_emb = nn.Embedding(self.num_items, self.emb_size)
-        self.u_bias = nn.Parameter(torch.FloatTensor(self.num_users))
-        self.i_bias = nn.Parameter(torch.FloatTensor(self.num_items))
+        self.u_bias = nn.Parameter(torch.randn(self.num_users))
+        self.i_bias = nn.Parameter(torch.randn(self.num_items))
 
         self.gru = nn.GRU(self.emb_size, self.hidden_size)
         #self.linear = nn.Linear(self.emb_size, 6) # use 6 since the rating is 0 - 5
