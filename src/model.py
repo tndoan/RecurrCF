@@ -60,6 +60,8 @@ class RCF(nn.Module):
         # sequential data
         i_e_s = i_e.squeeze()
         uu = u_idx.squeeze().cpu().numpy()
+        if uu.size == 1:
+            return rating_loss, 0
         start = uu[0]
         indexes = []
         for i in range(1, len(uu)):
@@ -72,7 +74,10 @@ class RCF(nn.Module):
         for i in range(len(indexes)):
             start = 0
             if i != 0:
-                start = i - 1
+                start = indexes[i - 1]
+            #print('start, index[i]', start, indexes[i])
+            if abs(start - indexes[i]) == 1: # the user only selects 1 item
+                continue
             sub_i_e = i_e_s[start:indexes[i]]
             hiddens, _ = self.gru(sub_i_e.unsqueeze(1), None)
             hiddens = hiddens + u_e[start:indexes[i]]
